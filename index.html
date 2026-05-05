@@ -1,0 +1,3315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Stack Web Development - Complete Guide</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #fff;
+            --surface: #fff;
+            --surface2: #f7f7f7;
+            --border: #e2e2e2;
+            --text: #000;
+            --text-muted: #666;
+            --text-dim: #333;
+            --code-bg: #f9f9f9;
+            --tag-bg: #f0f0f0;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #fff;
+            color: #111;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .site-header {
+            background: #fff;
+            padding: 80px 20px 32px;
+            max-width: 840px;
+            margin: 0 auto;
+        }
+
+        .site-header h1 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 800;
+            color: #000;
+            letter-spacing: -1px;
+        }
+
+        .site-header p {
+            color: #666;
+            margin-top: 8px;
+            font-size: 1rem;
+        }
+
+        .badge-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .badge {
+            background: #f0f0f0;
+            border: 1px solid #000;
+            color: #000;
+            padding: 3px 12px;
+            border-radius: 999px;
+            font-size: 11.5px;
+            font-weight: 700;
+            font-family: monospace;
+        }
+
+        .toc-nav {
+            background: rgba(255, 255, 255, .92);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e2e2e2;
+            padding: 14px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .toc-nav a {
+            color: #444;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            transition: all .2s;
+        }
+
+        .toc-nav a:hover {
+            color: #1d4ed8;
+            border-color: #1d4ed8;
+            background: #eff6ff;
+        }
+
+        .container {
+            max-width: 840px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+
+        .unit-header {
+            margin: 70px 0 30px;
+            padding: 0 0 16px;
+            border-bottom: 2px solid #000;
+        }
+
+        .unit-header h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #000;
+        }
+
+        .unit-header p {
+            color: #666;
+            margin-top: 6px;
+        }
+
+        /* ACCORDION */
+        .q-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            background: #fff;
+            transition: box-shadow .2s, border-color .2s;
+        }
+
+        .q-card:hover {
+            border-color: #d1d5db;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, .07);
+        }
+
+        .q-card.open {
+            border-color: #3b82f6;
+            box-shadow: 0 4px 24px rgba(59, 130, 246, .12);
+        }
+
+        .q-card-header {
+            cursor: pointer;
+            background: #fff;
+            padding: 16px 22px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            user-select: none;
+            transition: background .15s;
+        }
+
+        .q-card.open .q-card-header {
+            background: #f8fbff;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .q-card-header:hover {
+            background: #fafafa;
+        }
+
+        .q-num {
+            background: #f0f0f0;
+            color: #555;
+            font-family: monospace;
+            font-weight: 700;
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            flex-shrink: 0;
+            margin-top: 4px;
+            white-space: nowrap;
+        }
+
+        .q-card.open .q-num {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .q-toggle {
+            margin-left: auto;
+            font-size: 22px;
+            font-weight: 300;
+            color: #94a3b8;
+            flex-shrink: 0;
+            transition: transform .25s, color .2s;
+            line-height: 1.2;
+        }
+
+        .q-card.open .q-toggle {
+            transform: rotate(45deg);
+            color: #3b82f6;
+        }
+
+        .q-title {
+            font-family: 'Inter', sans-serif;
+            font-size: .92rem;
+            font-weight: 600;
+            color: #111;
+            line-height: 1.45;
+            flex: 1;
+        }
+
+        .q-body {
+            display: none;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 24px 26px 28px;
+            border-top: 1px solid #f0f0f0;
+            animation: fadeIn .2s ease;
+        }
+
+        .q-card.open .q-body {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        /* CONTENT */
+        .section {
+            margin-bottom: 24px;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-family: monospace;
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #000;
+            margin-bottom: 10px;
+        }
+
+        .section-label::before {
+            content: '';
+            display: block;
+            width: 3px;
+            height: 13px;
+            background: #000;
+            border-radius: 2px;
+        }
+
+        .def-box {
+            background: #f7f7f7;
+            border-left: 4px solid #000;
+            border-radius: 0 8px 8px 0;
+            padding: 16px 20px;
+            font-size: .95rem;
+            line-height: 1.8;
+        }
+
+        .def-box strong {
+            color: #000;
+            font-weight: 700;
+        }
+
+        .points {
+            list-style: none;
+            padding: 0;
+        }
+
+        .points li {
+            padding: 7px 0 7px 22px;
+            position: relative;
+            border-bottom: 1px solid rgba(0, 0, 0, .05);
+            font-size: .9rem;
+        }
+
+        .points li:last-child {
+            border-bottom: none;
+        }
+
+        .points li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #3b82f6;
+            font-size: 11px;
+            top: 10px;
+        }
+
+        .points li strong {
+            color: #000;
+            font-weight: 700;
+        }
+
+        .points li code {
+            background: #f0f0f0;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: .83em;
+            color: #000;
+        }
+
+        /* CODE */
+        .code-wrap {
+            background: #1e1e2e;
+            border: 1px solid #313244;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, .15);
+            margin: 4px 0;
+        }
+
+        .code-header {
+            background: #181825;
+            padding: 9px 14px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            border-bottom: 1px solid #313244;
+        }
+
+        .code-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+        }
+
+        .code-dot.r {
+            background: #ff5f57;
+        }
+
+        .code-dot.y {
+            background: #febc2e;
+        }
+
+        .code-dot.g {
+            background: #28c840;
+        }
+
+        .code-lang {
+            margin-left: auto;
+            font-family: monospace;
+            font-size: 10px;
+            color: #6c7086;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        pre {
+            padding: 18px 22px;
+            overflow-x: auto;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12.5px;
+            line-height: 1.75;
+            color: #cdd6f4;
+            margin: 0;
+        }
+
+        .kw {
+            color: #cba6f7;
+            font-weight: 600;
+        }
+
+        .fn {
+            color: #89b4fa;
+        }
+
+        .str {
+            color: #a6e3a1;
+        }
+
+        .cmt {
+            color: #585b70;
+            font-style: italic;
+        }
+
+        .num {
+            color: #fab387;
+        }
+
+        .tag {
+            color: #f38ba8;
+            font-weight: 600;
+        }
+
+        .attr {
+            color: #fab387;
+        }
+
+        .op {
+            color: #89dceb;
+        }
+
+        /* DIAGRAM */
+        .diagram-box {
+            background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 1px solid #cbd5e1;
+            border-radius: 16px;
+            padding: 32px 24px;
+            overflow-x: auto;
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.5), 0 4px 20px rgba(0, 0, 0, .05);
+            position: relative;
+        }
+
+        .diagram-box h4 {
+            font-family: 'Inter', sans-serif;
+            text-align: center;
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: #8892a4;
+            margin-bottom: 24px;
+        }
+
+        .flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        .flow-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 3px 0;
+        }
+
+        .fbox {
+            background: #fff;
+            border: 2px solid #c8cdd8;
+            border-radius: 8px;
+            padding: 12px 22px;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
+            min-width: 120px;
+            font-family: 'Inter', sans-serif;
+            color: #1e293b;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), inset 0 2px 0 rgba(255, 255, 255, 0.7);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            letter-spacing: 0.3px;
+        }
+
+        .fbox:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .fbox.blue {
+            background: #eff6ff;
+            border-color: #3b82f6;
+            color: #1d4ed8;
+        }
+
+        .fbox.purple {
+            background: #f5f3ff;
+            border-color: #8b5cf6;
+            color: #5b21b6;
+        }
+
+        .fbox.green {
+            background: #f0fdf4;
+            border-color: #22c55e;
+            color: #15803d;
+        }
+
+        .fbox.yellow {
+            background: #fffbeb;
+            border-color: #f59e0b;
+            color: #92400e;
+        }
+
+        .fbox.red {
+            background: #fef2f2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+
+        .fbox.dark {
+            background: #1e293b;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+
+        .fbox.teal {
+            background: #f0fdfa;
+            border-color: #14b8a6;
+            color: #0f766e;
+        }
+
+        .fbox.orange {
+            background: #fff7ed;
+            border-color: #f97316;
+            color: #9a3412;
+        }
+
+        .arrow-d {
+            color: #cbd5e1;
+            font-size: 24px;
+            line-height: 1;
+            padding: 4px 0;
+            text-align: center;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .arrow-r {
+            color: #cbd5e1;
+            font-size: 22px;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            padding: 0 4px;
+        }
+
+        /* ARCH */
+        .arch {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .arch-layer {
+            width: 100%;
+            max-width: 620px;
+            display: flex;
+            align-items: stretch;
+        }
+
+        .arch-label {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            background: #1e293b;
+            color: #94a3b8;
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 8px 6px;
+            border: 1.5px solid #334155;
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+            min-width: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .arch-content {
+            flex: 1;
+            display: flex;
+            gap: 7px;
+            padding: 11px 13px;
+            border: 1.5px solid #d0d7e3;
+            border-radius: 0 8px 8px 0;
+            background: #f8f9fc;
+            flex-wrap: wrap;
+        }
+
+        .arch-item {
+            background: #fff;
+            border: 1.5px solid #d0d7e3;
+            border-radius: 7px;
+            padding: 8px 13px;
+            font-size: 11.5px;
+            font-weight: 600;
+            color: #374151;
+            flex: 1;
+            min-width: 75px;
+            text-align: center;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, .05);
+        }
+
+        .arch-arrow {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 18px;
+            padding: 3px;
+        }
+
+        /* TABLE */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .85rem;
+        }
+
+        .compare-table th {
+            background: #f7f7f7;
+            color: #000;
+            padding: 11px 14px;
+            text-align: left;
+            font-size: 10.5px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #000;
+            font-weight: 700;
+        }
+
+        .compare-table td {
+            padding: 9px 14px;
+            border-bottom: 1px solid #e2e2e2;
+            color: #333;
+            vertical-align: top;
+        }
+
+        .compare-table tr:nth-child(even) td {
+            background: #fafafa;
+        }
+
+        .compare-table td:first-child {
+            font-weight: 700;
+            color: #000;
+        }
+
+        /* MISC */
+        .conclusion {
+            background: #f7f7f7;
+            border-left: 4px solid #000;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 18px;
+            font-size: .88rem;
+            color: #333;
+            font-style: italic;
+        }
+
+        .conclusion strong {
+            color: #000;
+            font-style: normal;
+        }
+
+        .note {
+            background: #fffbeb;
+            border-left: 3px solid #f59e0b;
+            padding: 11px 15px;
+            border-radius: 0 7px 7px 0;
+            font-size: .85rem;
+            color: #92400e;
+            margin: 10px 0;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .three-col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        @media(max-width:700px) {
+
+            .two-col,
+            .three-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .mini-card {
+            background: #f7f7f7;
+            border-left: 3px solid #000;
+            border-radius: 0 8px 8px 0;
+            padding: 12px 16px;
+        }
+
+        .mini-card h5 {
+            font-size: .9rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #000;
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #fff;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ddd;
+            border-radius: 3px;
+        }
+
+        .site-footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #888;
+            font-size: .8rem;
+            border-top: 1px solid #e2e2e2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <h1>Full Stack Study Guide</h1>
+        <p>A comprehensive, 42-question answer bank for exam preparation.</p>
+        <div class="badge-row">
+            <span class="badge">Unit I – HTML/CSS/JS</span>
+            <span class="badge">Unit II – Node/Express/MongoDB</span>
+            <span class="badge">Unit III – React</span>
+            <span class="badge">Unit IV – REST API & Security</span>
+            <span class="badge">Unit V – Full Stack Project</span>
+        </div>
+    </header>
+
+    <nav class="toc-nav">
+        <a href="#unit1">Unit I</a>
+        <a href="#unit2">Unit II</a>
+        <a href="#unit3">Unit III</a>
+        <a href="#unit4">Unit IV</a>
+        <a href="#unit5">Unit V</a>
+    </nav>
+
+    <main class="container">
+        <div class="unit-header" id="unit1" data-unit="I">
+            <h2>Unit I — Frontend Foundations</h2>
+            <p>HTML5 · CSS3 · JavaScript · Git · Responsive Design</p>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">1.1</span>
+                <div class="q-title">Define Web Development and explain its types (frontend, backend, full-stack). Draw
+                    and label a Full Stack Architecture.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box"><strong>Web Development</strong> is the art of building and maintaining
+                        websites. It's like building a house: you need someone to design the rooms (Frontend), someone
+                        to handle the plumbing and electricity (Backend), and someone who can do both (Full-Stack). It
+                        covers everything from the words you read to the databases that save your passwords.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <h4>The 3 Layers of Web Development</h4>
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">1. FRONTEND (The UI)</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox purple">2. BACKEND (The Logic)</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox green">3. DATABASE (The Storage)</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation</div>
+                    <ul class="points">
+                        <li><strong>Frontend (Client-side):</strong> This is the part users see. It’s built with
+                            <strong>HTML</strong> (structure), <strong>CSS</strong> (style), and
+                            <strong>JavaScript</strong> (action).</li>
+                        <li><strong>Backend (Server-side):</strong> The "brain" behind the scenes. It handles logins,
+                            calculations, and talks to the database using languages like <strong>Node.js</strong>.</li>
+                        <li><strong>Full-Stack:</strong> A developer who knows both Frontend and Backend. They can build
+                            an entire app alone.</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <div class="section-label">Example / Use Case</div>
+                    <div class="mini-card">
+                        <h5>🛒 Amazon Example</h5>
+                        <ul class="points">
+                            <li><strong>Frontend:</strong> The product photos, "Buy Now" button, and search bar.</li>
+                            <li><strong>Backend:</strong> Checking if the item is in stock and processing your credit
+                                card.</li>
+                            <li><strong>Full-Stack:</strong> The engineer who built both the button and the stock-check
+                                logic.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Web development is a team effort between the <strong>UI</strong> and the
+                        <strong>Server</strong>. Whether you focus on design (Frontend) or logic (Backend), a
+                        <strong>Full-Stack</strong> understanding is the ultimate goal for any modern developer.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">1.2</span>
+                <div class="q-title">Construct a complete HTML5 webpage using semantic tags (header, nav, section,
+                    article, aside, footer) including image, link, and table.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box"><strong>Semantic HTML</strong> means using tags that describe their "meaning"
+                        instead of just their "look". Think of it like labeling boxes in a move: instead of calling
+                        everything a "Box" (div), you label them "Kitchen" (header) or "Bedroom" (section). This helps
+                        search engines (SEO) and blind users (Accessibility) understand your site.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <h4>Standard Semantic Layout</h4>
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">&lt;header&gt; (Logo/Title)</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox teal">&lt;nav&gt; (Menu)</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox orange">&lt;section&gt; (Main Content)</span><span
+                                    class="fbox yellow">&lt;aside&gt; (Sidebar)</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox dark">&lt;footer&gt; (Copyright)</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation</div>
+                    <ul class="points">
+                        <li><strong>&lt;header&gt; &amp; &lt;footer&gt;:</strong> The top and bottom parts of your site.
+                        </li>
+                        <li><strong>&lt;nav&gt;:</strong> Your navigation menu.</li>
+                        <li><strong>&lt;section&gt; &amp; &lt;article&gt;:</strong> Used for grouping content and
+                            independent blog posts.</li>
+                        <li><strong>&lt;aside&gt;:</strong> Sidebars or extra info.</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span
+                                class="code-dot g"></span><span class="code-lang">html</span></div>
+                        <pre>&lt;body&gt;
+  &lt;header&gt;&lt;h1&gt;My Site&lt;/h1&gt;&lt;/header&gt;
+  &lt;nav&gt;&lt;a href="#"&gt;Home&lt;/a&gt;&lt;/nav&gt;
+  &lt;main&gt;
+    &lt;section&gt;
+      &lt;h2&gt;News&lt;/h2&gt;
+      &lt;article&gt;HTML5 is awesome!&lt;/article&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;&copy; 2026&lt;/footer&gt;
+&lt;/body&gt;</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Using <strong>Semantic Tags</strong> is the first step to professional web
+                        development. It makes your code cleaner, more accessible, and much more likely to show up on
+                        Google.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">1.3</span>
+                <div class="q-title">Explain HTML tables (header, merged cells, caption, thead, tbody, tfoot) and differentiate block,
+                    inline, and inline-block elements with examples.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">An <strong>HTML Table</strong> is a structured grid used to display data in rows and columns. It follows a strict hierarchy (Table > Row > Data). Alongside tables, understanding <strong>Display Properties</strong> is critical for layout—they determine if an element takes up a whole line or sits next to its neighbors.</div>
+                </div>
+
+                <div class="section">
+                    <div class="section-label">Explanation (The HTML Table Anatomy)</div>
+                    <div class="mini-card">
+                        <h5>📊 Semantic Table Structure</h5>
+                        <ul class="points">
+                            <li><strong>&lt;caption&gt;:</strong> The "Title" of the table (SEO friendly).</li>
+                            <li><strong>&lt;thead&gt;:</strong> Groups the header content (labels). Contains <code>&lt;th&gt;</code>.</li>
+                            <li><strong>&lt;tbody&gt;:</strong> Groups the main body content (the actual data).</li>
+                            <li><strong>&lt;tfoot&gt;:</strong> Groups footer content (e.g., "Total" or "Summary").</li>
+                            <li><strong>Merged Cells:</strong> 
+                                <br>• <code>colspan="2"</code>: Merges 2 columns horizontally (stretches wide).
+                                <br>• <code>rowspan="2"</code>: Merges 2 rows vertically (stretches tall).
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-label">Explanation (Display Properties Deep-Dive)</div>
+                    <div class="three-col">
+                        <div class="mini-card" style="border-left-color: #ef4444;">
+                            <h5>📦 Block</h5>
+                            <ul class="points" style="font-size: 0.8rem;">
+                                <li>Starts on <strong>New Line</strong>.</li>
+                                <li>Takes <strong>100% Width</strong>.</li>
+                                <li>Respects <code>margin/padding</code>.</li>
+                                <li>Ex: <code>&lt;div&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;h1&gt;</code>.</li>
+                            </ul>
+                        </div>
+                        <div class="mini-card" style="border-left-color: #3b82f6;">
+                            <h5>🔡 Inline</h5>
+                            <ul class="points" style="font-size: 0.8rem;">
+                                <li>Sits <strong>Next to neighbors</strong>.</li>
+                                <li>Width = <strong>Content size</strong>.</li>
+                                <li><strong>Cannot</strong> set <code>width/height</code>.</li>
+                                <li>Ex: <code>&lt;span&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;b&gt;</code>.</li>
+                            </ul>
+                        </div>
+                        <div class="mini-card" style="border-left-color: #22c55e;">
+                            <h5>🧩 Inline-Block</h5>
+                            <ul class="points" style="font-size: 0.8rem;">
+                                <li>Sits <strong>Next to neighbors</strong>.</li>
+                                <li>Width = <strong>Content size</strong>.</li>
+                                <li><strong>CAN</strong> set <code>width/height</code>.</li>
+                                <li>Ex: <code>&lt;button&gt;</code>, <code>&lt;img&gt;</code>, <code>&lt;input&gt;</code>.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <h4>Visualizing Display & Tables</h4>
+                        <div class="flow">
+                            <!-- Table Visual -->
+                            <div class="flow-row">
+                                <div style="border:2px solid #000; padding:10px; border-radius:8px; background:#fff;">
+                                    <div style="font-weight:bold; border-bottom:1px solid #ddd; padding-bottom:5px;">&lt;thead&gt; [ Header 1 ] [ Header 2 ]</div>
+                                    <div style="padding:10px 0;">&lt;tbody&gt; [ Row 1 ] [ Row 1 ]</div>
+                                    <div style="padding:10px 0; background:#f9f9f9;">[ Merged Cell (Colspan) ]</div>
+                                    <div style="border-top:1px solid #ddd; padding-top:5px; font-style:italic;">&lt;tfoot&gt; [ Footer Summary ]</div>
+                                </div>
+                            </div>
+                            <div class="arrow-d">↓</div>
+                            <!-- Display Visual -->
+                            <div class="flow-row"><span class="fbox red" style="width:100%;">BLOCK (Full Width)</span></div>
+                            <div class="flow-row">
+                                <span class="fbox blue" style="min-width:60px;">INLINE</span>
+                                <span class="fbox blue" style="min-width:60px;">INLINE</span>
+                                <span class="fbox green" style="width:120px; height:40px;">INLINE-BLOCK</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">html</span></div>
+                        <pre>&lt;!-- Advanced Table Structure --&gt;
+&lt;table border="1"&gt;
+  &lt;caption&gt;Student Grades 2024&lt;/caption&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Subject&lt;/th&gt;&lt;th&gt;Grade&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td rowspan="2"&gt;John Doe&lt;/td&gt; &lt;!-- Merges 2 rows --&gt;
+      &lt;td&gt;Math&lt;/td&gt;&lt;td&gt;A&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Science&lt;/td&gt;&lt;td&gt;B&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;&lt;td colspan="3"&gt;Total Students: 1&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;
+
+&lt;!-- Display Property Demo --&gt;
+&lt;div style="display: block; border: 1px solid red;"&gt;I am a Block&lt;/div&gt;
+&lt;span style="display: inline; border: 1px solid blue;"&gt;I am Inline&lt;/span&gt;
+&lt;div style="display: inline-block; width: 100px; border: 1px solid green;"&gt;I am Inline-Block&lt;/div&gt;</pre>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Tables are essential for <strong>data-heavy grids</strong>, while <code>block</code> and <code>inline</code> properties are the foundational atoms of <strong>CSS Layout</strong>. Mastering <code>inline-block</code> is the bridge between flow and control.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">1.4</span>
+                <div class="q-title">Design a registration form with input types (text, email, password, radio,
+                    checkbox). Apply CSS styling.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">An <strong>HTML Form</strong> is how we talk to a website. It’s a group of
+                        empty boxes where you type info. To make it professional, we use different "types" (like
+                        password dots or clickable circles) and use <strong>CSS</strong> to make it look clean and
+                        balanced.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <h4>How Forms Work</h4>
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">1. User types data</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox teal">2. Browser validates format</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox purple">3. Data sent to Server</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (Input Types)</div>
+                    <ul class="points">
+                        <li><strong>Text &amp; Email:</strong> For names and email addresses. Email types automatically
+                            check for the "@" symbol.</li>
+                        <li><strong>Password:</strong> Hides your typing with dots for security.</li>
+                        <li><strong>Radio:</strong> Like a multiple-choice question where you can only pick
+                            <strong>one</strong> (e.g., Male OR Female).</li>
+                        <li><strong>Checkbox:</strong> For picking <strong>multiple</strong> things (e.g., Hobbies).
+                        </li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span
+                                class="code-dot g"></span><span class="code-lang">html</span></div>
+                        <pre>&lt;form&gt;
+  &lt;label&gt;Name:&lt;/label&gt; &lt;input type="text"&gt;
+  &lt;label&gt;Email:&lt;/label&gt; &lt;input type="email"&gt;
+  &lt;label&gt;Password:&lt;/label&gt; &lt;input type="password"&gt;
+  &lt;label&gt;Gender:&lt;/label&gt;
+  &lt;input type="radio" name="g"&gt; M &lt;input type="radio" name="g"&gt; F
+  &lt;button&gt;Register&lt;/button&gt;
+&lt;/form&gt;</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">A good <strong>Registration Form</strong> is the bridge between a user and
+                        your database. By using correct <strong>Input Types</strong>, you ensure the data is accurate
+                        and the user experience is painless.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">1.5</span>
+                <div class="q-title">Implement JavaScript form validation (required fields, email format, password
+                    strength).</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box"><strong>Form Validation</strong> is like a security guard at the door. Before
+                        your data is sent to the server, JavaScript checks if the fields are empty or if the password is
+                        too weak. This saves time and prevents hackers from sending "garbage" data to your database.
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (The Process)</div>
+                    <ul class="points">
+                        <li><strong>Required Check:</strong> Making sure a field isn't empty.</li>
+                        <li><strong>Format Check:</strong> Using <strong>Regex</strong> (a pattern matcher) to see if an
+                            email looks like <code>name@site.com</code>.</li>
+                        <li><strong>Strength Check:</strong> Checking if a password has at least 8 characters or special
+                            symbols.</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <h4>Validation Logic Flow</h4>
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox orange">User clicks 'Submit'</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox teal">JS checks fields</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox green">Valid? -> Submit</span><span
+                                    class="fbox red">Invalid? -> Show Error</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span
+                                class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>function validate() {
+  let email = document.getElementById("email").value;
+  // Simple check for '@'
+  if (!email.includes("@")) {
+    alert("Invalid Email!");
+    return false; // Stops form
+  }
+  return true; // Continues form
+}</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion"><strong>JavaScript Validation</strong> provides instant feedback. It makes
+                        your app feel "smart" because it catches mistakes immediately, before the user even submits the
+                        form.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">1.6</span>
+                <div class="q-title">Explain CSS selectors (class, id, attribute, pseudo-class) with examples.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box"><strong>CSS Selectors</strong> are how you "pick" an element to style it. If
+                        HTML is the person, CSS Selectors are like pointing at them and saying "You, wear a blue shirt!"
+                        You can point at everyone (Tag), a group (Class), or one specific person (ID).</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (Selector Types)</div>
+                    <ul class="points">
+                        <li><strong>Tag (Element):</strong> Styles all elements of that type (e.g., all
+                            <code>&lt;p&gt;</code> tags).</li>
+                        <li><strong>Class (.):</strong> Styles a group of items. Use this for things you repeat (like
+                            buttons).</li>
+                        <li><strong>ID (#):</strong> Styles <strong>one unique</strong> item. Like a home address, it
+                            should only be used once.</li>
+                        <li><strong>Pseudo-class (:):</strong> Styles an item in a specific state, like when you
+                            <strong>hover</strong> over a link.</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <div class="section-label">Extra (Comparison Table)</div>
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th>Selector</th>
+                                <th>Symbol</th>
+                                <th>Used For...</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Tag</td>
+                                <td>None</td>
+                                <td>General styles</td>
+                            </tr>
+                            <tr>
+                                <td>Class</td>
+                                <td><code>.</code></td>
+                                <td>Reusable groups</td>
+                            </tr>
+                            <tr>
+                                <td>ID</td>
+                                <td><code>#</code></td>
+                                <td>One unique item</td>
+                            </tr>
+                            <tr>
+                                <td>Pseudo</td>
+                                <td><code>:</code></td>
+                                <td>States like hover</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Learning <strong>Selectors</strong> is the key to mastering CSS. By knowing
+                        when to use a <strong>Class</strong> versus an <strong>ID</strong>, you can write clean code
+                        that is easy to update and style.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">1.7</span>
+                <div class="q-title">Compare Flexbox and Grid layouts with diagrams and use cases. Also explain
+                    responsive design using media queries.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box"><strong>Flexbox</strong> and <strong>Grid</strong> are CSS layout modules. Flexbox is 1-dimensional (row OR column), while Grid is 2-dimensional (rows AND columns). <strong>Media Queries</strong> allow these layouts to change based on screen size.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (The Difference)</div>
+                    <ul class="points">
+                        <li><strong>Flexbox:</strong> Best for aligning items in a line (navbars, centering).</li>
+                        <li><strong>Grid:</strong> Best for large page structures (header, sidebar, main, footer).</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">FLEX [A][B][C]</span><span class="arrow-r">↔</span><span class="fbox purple">GRID [A][B] / [C][D]</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">css</span></div>
+                        <pre>/* Media Query Example */
+@media (max-width: 600px) {
+  .container { flex-direction: column; }
+}</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Combining Flexbox for components and Grid for layouts creates a modern, responsive user experience.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">1.8</span>
+                <div class="q-title">Write JavaScript programs for Array operations, ES6 features, and DOM manipulation.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">Modern JavaScript (ES6+) focuses on functional programming and direct page interaction via the DOM. Arrays are the primary data structure for lists.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">JS Engine</span><span class="arrow-r">→</span><span class="fbox orange">DOM API</span><span class="arrow-r">→</span><span class="fbox green">Visual Page Update</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>// Array Sum
+const sum = [1, 2, 3].reduce((a, b) => a + b, 0);
+
+// DOM Event
+button.addEventListener('click', () => {
+  document.body.style.background = 'red';
+});</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">JS is the "brain" of the web. Mastering DOM and Arrays is 80% of frontend work.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">1.9</span>
+                <div class="q-title">Explain Git workflow and GitHub Pages hosting.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">Git is a Version Control System. GitHub is a hosting service for Git repositories. GitHub Pages is a free hosting service for static websites.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox teal">Local Repo</span><span class="arrow-r">→</span><span class="fbox dark">git push</span><span class="arrow-r">→</span><span class="fbox green">GitHub Remote</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">bash</span></div>
+                        <pre>git add .
+git commit -m "Initial commit"
+git push origin main</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Git is mandatory for professional collaboration and deployment.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">2.1</span>
+                <div class="q-title">Define Node.js and explain its features. Create a basic Express.js server with GET
+                    and POST routes.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box"><strong>Node.js</strong> is a tool that lets you run JavaScript on your
+                        computer (instead of just in a browser). It’s the "engine" that powers the backend of your app.
+                        <strong>Express.js</strong> is a helper for Node.js that makes it easy to build "Routes" (like
+                        <code>/home</code> or <code>/login</code>) for your server.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (The Analogy)</div>
+                    <div class="mini-card">
+                        <h5>👷 The "Single Worker" Analogy</h5>
+                        <p>Node.js is like a <strong>highly efficient waiter</strong> in a restaurant. Instead of
+                            waiting for one meal to cook before taking the next order, the waiter takes everyone's
+                            order, gives them to the kitchen, and serves them as soon as they are ready. This is why
+                            it's called <strong>"Non-blocking"</strong>.</p>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <h4>How Node.js Handles Requests</h4>
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">User Request</span><span
+                                    class="arrow-r">→</span><span class="fbox purple">Node.js (Waiter)</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox orange">Database / File System (Kitchen)</span>
+                            </div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox green">Response Sent back to User</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code (Express Server)</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span
+                                class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+  res.send("Hello from the Backend!");
+});
+
+app.listen(3000, () => console.log("Server Live!"));</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion"><strong>Node.js</strong> makes backend development fast and familiar because
+                        it uses the same <strong>JavaScript</strong> you use for frontend. It’s perfect for apps that
+                        handle many users at once.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">2.2</span>
+                <div class="q-title">Explain Express.js concepts: routing, middleware, body parsing, and CORS.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">Express simplifies backend tasks like handling URLs (Routing) and processing incoming data (Body Parsing). <strong>CORS</strong> is a security feature that controls which websites can talk to your API.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">Request</span><span class="arrow-r">→</span><span class="fbox purple">CORS Middleware</span><span class="arrow-r">→</span><span class="fbox orange">Body Parser</span><span class="arrow-r">→</span><span class="fbox green">Route</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>app.use(cors());
+app.use(express.json()); // Body Parser
+app.get('/api', (req, res) => res.json({ ok: true }));</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Middleware is the "glue" of Express, allowing you to run code before your main route logic.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">2.3</span>
+                <div class="q-title">Explain the differences between SQL and NoSQL databases.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">SQL (Relational) stores data in tables with fixed schemas. NoSQL (Non-relational) stores data as documents (JSON-like), which is more flexible.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">SQL: Tables/Rows</span><span class="arrow-r">≠</span><span class="fbox purple">NoSQL: JSON Documents</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>// NoSQL (MongoDB) Example
+{ "name": "John", "hobbies": ["Coding", "Music"] }</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Choose SQL for strict data structure and NoSQL for rapid growth and flexibility.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">2.4</span>
+                <div class="q-title">Explain indexing and query optimization in MongoDB with examples.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box"><strong>Indexing</strong> in MongoDB is a data structure (B-tree) that stores a
+                        small portion of the collection's data set in an easy-to-traverse form. Without indexes, MongoDB
+                        must perform a <em>Collection Scan</em> (reading every document) to find matches. Indexes allow
+                        the database to locate data efficiently, vastly improving <strong>Query Optimization</strong>
+                        and read performance.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <h4>Without vs With Index</h4>
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">Query: Find User ID=99</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox red">NO INDEX: Collection Scan</span><span
+                                    class="fbox green">WITH INDEX: Index Scan</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox red">Scans 100,000 Documents 🐢</span><span
+                                    class="fbox green">Scans 1 Document 🚀</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (Types of Indexes)</div>
+                    <ul class="points">
+                        <li><strong>Single Field Index:</strong> An index on a single property (e.g., email).</li>
+                        <li><strong>Compound Index:</strong> An index on multiple fields (e.g., sorting by age, then by
+                            name).</li>
+                        <li><strong>Unique Index:</strong> Ensures no two documents have the same value for the indexed
+                            field (automatically created for the <code>_id</code> field).</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span
+                                class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>const mongoose = require(&#x27;mongoose&#x27;);
+
+const ProductSchema = new mongoose.Schema({
+    name: String,
+    category: String,
+    price: Number,
+    sku: { type: String, unique: true } // 1. Creates a Unique Index
+});
+
+// 2. Create a Single Field Index (1 for ascending, -1 for descending)
+ProductSchema.index({ category: 1 }); 
+
+// 3. Create a Compound Index (Optimizes: find({ category: &quot;Electronics&quot; }).sort({ price: -1 }))
+ProductSchema.index({ category: 1, price: -1 });
+
+const Product = mongoose.model(&#x27;Product&#x27;, ProductSchema);
+
+// MongoDB Query Optimization Helper
+// Using .explain(&quot;executionStats&quot;) in the mongo shell shows if an index was used.
+// db.products.find({ category: &quot;Electronics&quot; }).explain(&quot;executionStats&quot;);</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Proper <strong>Indexing</strong> is the cornerstone of database performance
+                        tuning. While indexes dramatically speed up read operations (queries), they consume memory and
+                        slightly slow down write operations, so they must be applied strategically to heavily queried
+                        fields.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">2.5</span>
+                <div class="q-title">Implement User Registration and Login with Password Hashing.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">Authentication requires storing passwords safely. We never store plain text; we use <strong>bcrypt</strong> to hash them.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (The Workflow)</div>
+                    <ul class="points">
+                        <li><strong>Register:</strong> Hash the password and save to DB.</li>
+                        <li><strong>Login:</strong> Compare the entered password with the stored hash.</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>const salt = await bcrypt.genSalt(10);
+const hash = await bcrypt.hash(password, salt);</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Password hashing is the bare minimum for user security.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">2.6</span>
+                <div class="q-title">Explain Angular concepts: components, forms, and two-way data binding with example.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">Angular is a structured framework for complex apps. <strong>Two-way Data Binding</strong> ensures the UI and the Code are always in sync.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">UI Input</span><span class="arrow-r">↔</span><span class="fbox purple">[(ngModel)]</span><span class="arrow-r">↔</span><span class="fbox green">TS Variable</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">html</span></div>
+                        <pre>&lt;!-- Two-way binding --&gt;
+&lt;input [(ngModel)]="username"&gt;
+&lt;p&gt;Hello, {{username}}!&lt;/p&gt;</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Angular's binding reduces manual DOM updates, making developers more productive.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">2.7</span>
+                <div class="q-title">Explain JWT authentication: token generation, validation, and securing API routes.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">JWT is a secure way to transmit user info as a JSON object. It is used for "Stateless" authentication.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">Login</span><span class="arrow-r">→</span><span class="fbox orange">Server: Sign JWT</span><span class="arrow-r">→</span><span class="fbox green">Browser: Store in Cookie</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>const token = jwt.sign({ id: user._id }, 'secret', { expiresIn: '1h' });</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">JWTs allow servers to be "Stateless", meaning they don't have to remember every logged-in user in memory.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">2.8</span>
+                <div class="q-title">Demonstrate full-stack integration: Angular → Node.js → MongoDB including data flow explanation.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">Integration is the flow of data across all layers. Angular (Frontend) → Express (Backend) → MongoDB (Storage).</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">Angular (UI)</span><span class="arrow-r">→</span><span class="fbox orange">Node (API)</span><span class="arrow-r">→</span><span class="fbox green">MongoDB (DB)</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>// Angular Service
+this.http.post('/api/save', data).subscribe();
+
+// Express Route
+app.post('/api/save', (req, res) => {
+  new Model(req.body).save();
+  res.json({ ok: true });
+});</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">A complete data flow ensures that user actions are permanently stored and correctly displayed.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">2.9</span>
+                <div class="q-title">Explain advanced Express features: route parameters, query parameters, error
+                    handling, and handling async operations (Promise.all).</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">Advanced <strong>Express.js</strong> features allow for dynamic routing and
+                        robust APIs. <strong>Route Parameters</strong> capture data from the URL path, <strong>Query
+                            Parameters</strong> capture data from the URL query string. A centralized <strong>Error
+                            Handling Middleware</strong> catches crashes gracefully. <code>Promise.all</code> is used to
+                        execute multiple asynchronous database queries concurrently to save time.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Extra (Comparison)</div>
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>URL Example</th>
+                                <th>Express Syntax</th>
+                                <th>Use Case</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Route Parameter</td>
+                                <td><code>/users/123</code></td>
+                                <td><code>req.params.id</code></td>
+                                <td>Fetching a specific resource by ID</td>
+                            </tr>
+                            <tr>
+                                <td>Query Parameter</td>
+                                <td><code>/users?sort=age</code></td>
+                                <td><code>req.query.sort</code></td>
+                                <td>Filtering, sorting, or pagination</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span
+                                class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>const express = require(&#x27;express&#x27;);
+const app = express();
+
+// 1. Route Parameters (Dynamic URLs)
+// URL: /api/users/456
+app.get(&#x27;/api/users/:id&#x27;, (req, res) =&gt; {
+    const userId = req.params.id; // &quot;456&quot;
+    res.json({ user: userId });
+});
+
+// 2. Query Parameters (Filtering)
+// URL: /api/products?category=shoes&amp;limit=10
+app.get(&#x27;/api/products&#x27;, (req, res) =&gt; {
+    const category = req.query.category; // &quot;shoes&quot;
+    const limit = req.query.limit; // &quot;10&quot;
+    res.json({ category, limit });
+});
+
+// 3. Handling Async Operations Concurrently (Promise.all)
+app.get(&#x27;/api/dashboard&#x27;, async (req, res, next) =&gt; {
+    try {
+        // Run both DB queries at the SAME TIME, rather than waiting for one to finish
+        const [users, orders] = await Promise.all([
+            UserModel.countDocuments(),
+            OrderModel.countDocuments()
+        ]);
+        res.json({ users, orders });
+    } catch (error) {
+        next(error); // 4. Forward to Error Handler
+    }
+});
+
+// 4. Centralized Error Handling Middleware (Must have 4 arguments)
+app.use((err, req, res, next) =&gt; {
+    console.error(&quot;Crash logged:&quot;, err.message);
+    res.status(500).json({ error: &quot;Internal Server Error&quot; });
+});</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Utilizing <strong>Route and Query Parameters</strong> allows a single API
+                        endpoint to serve infinite data variations. Wrapping asynchronous code in <code>try/catch</code>
+                        blocks and routing failures to a centralized <strong>Error Handler</strong> prevents the Node.js
+                        server from crashing in production.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">3.1</span>
+                <div class="q-title">Explain React components, props, and state with examples.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">Components are the building blocks of React. <strong>Props</strong> are inputs passed from parents. <strong>State</strong> is internal data that changes over time.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">Parent</span><span class="arrow-r">-(props)→</span><span class="fbox purple">Child (State)</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>function Welcome(props) {
+  const [count, setCount] = useState(0);
+  return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;;
+}</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">React uses a "One-way data flow" (Props down, Events up) to keep UI predictable.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">3.2</span>
+                <div class="q-title">Explain React Hooks (useState) and how state updates trigger re-rendering.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">The **Virtual DOM** is React's "Secret Weapon". Instead of changing the real
+                        website every time a small thing happens (which is slow), React makes a "Fake Copy" (Virtual
+                        DOM). It calculates the changes on the fake copy first and then only updates the tiny parts of
+                        the real site that actually changed.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (The Analogy)</div>
+                    <div class="mini-card">
+                        <h5>🏗️ The "Architect's Blueprint" Analogy</h5>
+                        <p>Imagine you want to move a window in a house. You don't knock down the real wall first! You
+                            draw it on the <strong>Blueprint</strong> (Virtual DOM). Once the drawing is perfect, you
+                            only send the workers to move that one specific window in the real house.</p>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <h4>Virtual DOM Process</h4>
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox orange">1. Data Changes</span><span
+                                    class="arrow-r">→</span><span class="fbox blue">2. Update Virtual DOM</span><span
+                                    class="arrow-r">→</span><span class="fbox green">3. Update Real DOM</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">The **Virtual DOM** is why React is so incredibly fast. It prevents "wasting
+                        work" by only updating what is absolutely necessary on the screen.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">3.3</span>
+                <div class="q-title">Explain controlled vs uncontrolled components and develop a React form.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">1. Definition / Intro</div>
+                    <div class="def-box">In React, form handling depends on "who holds the data". <strong>Controlled Components</strong> store input values in React State, while <strong>Uncontrolled Components</strong> let the browser's DOM handle the data.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">2. Core Concepts</div>
+                    <ul class="points">
+                        <li><strong>Controlled:</strong> Uses <code>value</code> and <code>onChange</code>. React is the "Boss".</li>
+                        <li><strong>Uncontrolled:</strong> Uses <code>useRef</code>. The DOM is the "Boss".</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <div class="section-label">3. The Analogy</div>
+                    <div class="mini-card">
+                        <h5>📺 The "Smart TV" vs "Old Radio"</h5>
+                        <p><strong>Controlled</strong> is like a Smart TV remote: the TV screen and the remote are always in sync. <strong>Uncontrolled</strong> is like an old radio dial: you turn it manually, and the radio only knows where it is when you stop and check.</p>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">4. Comparison Table</div>
+                    <table class="compare-table">
+                        <thead><tr><th>Feature</th><th>Controlled</th><th>Uncontrolled</th></tr></thead>
+                        <tbody>
+                            <tr><td>State</td><td>React useState</td><td>DOM (useRef)</td></tr>
+                            <tr><td>Validation</td><td>Real-time (per key)</td><td>On Submit only</td></tr>
+                            <tr><td>Performance</td><td>Slower for large forms</td><td>Faster (less re-renders)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="section">
+                    <div class="section-label">5. Diagram</div>
+                    <div class="diagram-box">
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">Input (Typing)</span><span class="arrow-r">→</span><span class="fbox purple">setState()</span><span class="arrow-r">→</span><span class="fbox green">Value Prop Updates</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span>(React has full control)</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">6. Code Block</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>// Controlled Component (Standard)
+const [name, setName] = useState('');
+return &lt;input value={name} onChange={(e) => setName(e.target.value)} /&gt;;
+
+// Uncontrolled Component (Edge Case)
+const inputRef = useRef();
+const submit = () => console.log(inputRef.current.value);
+return &lt;input ref={inputRef} /&gt;;</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">7. Best Practices</div>
+                    <div class="note">Always use <strong>Controlled Components</strong> unless you are integrating with a non-React library or handling massive forms where performance is a critical bottleneck.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">8. Conclusion</div>
+                    <div class="conclusion">Controlled components offer the most power and flexibility, allowing for complex features like conditional validation and dynamic UI updates.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">3.4</span>
+                <div class="q-title">Implement form validation using React Hook Form or Formik.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">1. Definition / Intro</div>
+                    <div class="def-box"><strong>React Hook Form</strong> is a library that simplifies form management. It reduces boilerplate code and improves performance by using "Uncontrolled" inputs under the hood while providing a simple "Controlled" API.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">2. Core Concepts</div>
+                    <ul class="points">
+                        <li><strong>Register:</strong> Connects an input to the library.</li>
+                        <li><strong>HandleSubmit:</strong> Wraps your submission logic with validation checks.</li>
+                        <li><strong>Errors:</strong> An object that tracks validation failures automatically.</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <div class="section-label">3. The Analogy</div>
+                    <div class="mini-card">
+                        <h5>📝 The "Form Accountant"</h5>
+                        <p>Instead of you checking every line of a tax return yourself, you give it to an Accountant (React Hook Form). They check everything for you and only tell you if there's a mistake at the end.</p>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">4. Why use it?</div>
+                    <div class="mini-card">
+                        <ul class="points">
+                            <li><strong>Less Re-renders:</strong> Doesn't refresh the whole page on every keystroke.</li>
+                            <li><strong>Smaller Code:</strong> Replaces 10 lines of <code>useState</code> with 1 line of <code>register</code>.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">5. Diagram</div>
+                    <div class="diagram-box">
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">User Input</span><span class="arrow-r">→</span><span class="fbox purple">RHF Internal Cache</span><span class="arrow-r">→</span><span class="fbox orange">Validation (Regex)</span><span class="arrow-r">→</span><span class="fbox green">Submit</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">6. Code Block</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>import { useForm } from "react-hook-form";
+
+function App() {
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  
+  return (
+    &lt;form onSubmit={handleSubmit(data => console.log(data))}&gt;
+      &lt;input {...register("email", { required: true })} /&gt;
+      {errors.email && &lt;span&gt;This field is required&lt;/span&gt;}
+      &lt;button type="submit"&gt;Submit&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">7. Best Practices</div>
+                    <div class="note">Pair React Hook Form with <strong>Yup</strong> or <strong>Zod</strong> for schema-based validation. This keeps your validation rules separate from your UI code.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">8. Conclusion</div>
+                    <div class="conclusion">React Hook Form is the industry standard for modern React applications, offering the best balance of developer experience and app performance.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">3.5</span>
+                <div class="q-title">Demonstrate API communication in React using Fetch/Axios with error handling.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">To display dynamic data from a backend server, React must make HTTP requests.
+                        This is commonly done using the native browser <strong>Fetch API</strong> or a third-party
+                        library like <strong>Axios</strong>. These asynchronous calls are typically placed inside the
+                        <code>useEffect</code> hook so the data is fetched when the component mounts.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <h4>React Data Fetching Lifecycle</h4>
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">Component Mounts</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox teal">useEffect triggers fetch()</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox yellow">Show Loading Spinner...</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox orange">Await Promise Resolution</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox green">Success? → setData(json)</span><span
+                                    class="fbox red">Fail? → setError(msg)</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox purple">React Re-renders UI with Data</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span
+                                class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>import React, { useState, useEffect } from &#x27;react&#x27;;
+
+function UserList() {
+  // 1. State for Data, Loading, and Errors
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // 2. useEffect runs once on mount (empty dependency array [])
+  useEffect(() =&gt; {
+    const fetchUsers = async () =&gt; {
+      try {
+        // 3. Make HTTP Request
+        const response = await fetch(&#x27;https://jsonplaceholder.typicode.com/users&#x27;);
+        
+        // Fetch requires manual check for 404/500 errors
+        if (!response.ok) throw new Error(&#x27;Failed to fetch data&#x27;);
+        
+        const data = await response.json();
+        setUsers(data); // 4. Update State
+      } catch (err) {
+        setError(err.message); // 5. Catch network errors
+      } finally {
+        setLoading(false); // 6. Turn off spinner
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  // 7. Conditional Rendering based on state
+  if (loading) return &lt;p&gt;Loading users...&lt;/p&gt;;
+  if (error) return &lt;p style={{color:&#x27;red&#x27;}}&gt;Error: {error}&lt;/p&gt;;
+
+  return (
+    &lt;ul&gt;
+      {users.map(user =&gt; &lt;li key={user.id}&gt;{user.name}&lt;/li&gt;)}
+    &lt;/ul&gt;
+  );
+}</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Robust API communication in React requires managing three specific states:
+                        <strong>Data, Loading, and Error</strong>. By wrapping <code>fetch()</code> or
+                        <code>axios</code> inside a <code>useEffect</code> hook with a <code>try/catch</code> block, the
+                        UI remains responsive and resilient to network failures.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">3.6</span>
+                <div class="q-title">Explain React Router and client-side navigation in Single Page Applications.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">React is used to build <strong>Single Page Applications (SPAs)</strong>. In a traditional site, every click downloads a new HTML file. In a React SPA, the page never reloads; instead, <strong>React Router</strong> swaps the content of the page based on the URL, making the app feel incredibly fast.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (How it Works)</div>
+                    <div class="mini-card">
+                        <h5>🚀 The "Instant Swap" Technique</h5>
+                        <ul class="points">
+                            <li><strong>History API:</strong> React Router uses the browser's hidden history to change the URL without refreshing.</li>
+                            <li><strong>Route Matching:</strong> It looks at the current URL (e.g., <code>/profile</code>) and finds the matching component in your code.</li>
+                            <li><strong>Client-Side Nav:</strong> Since all the code is already in the browser, the transition happens in milliseconds.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <h4>SPA vs Traditional Routing</h4>
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox red">Traditional: Request → Server → Reload HTML</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox green">React SPA: Click → Swap Component → No Reload</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+
+function App() {
+  return (
+    &lt;BrowserRouter&gt;
+      &lt;nav&gt;
+        &lt;Link to="/"&gt;Home&lt;/Link&gt; | &lt;Link to="/about"&gt;About&lt;/Link&gt;
+      &lt;/nav&gt;
+      &lt;Routes&gt;
+        &lt;Route path="/" element={&lt;Home /&gt;} /&gt;
+        &lt;Route path="/about" element={&lt;About /&gt;} /&gt;
+      &lt;/Routes&gt;
+    &lt;/BrowserRouter&gt;
+  );
+}</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion"><strong>React Router</strong> is what turns a collection of components into a <strong>Single Page Application</strong>, providing a seamless, desktop-like experience on the web.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">3.7</span>
+                <div class="q-title">Compare Context API and Redux for global state management.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">Global State Management solves the "Prop Drilling" problem. <strong>Context API</strong> is built into React for simple data (like User Login). <strong>Redux</strong> is a powerful external library for complex data (like a shopping cart).</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (The Difference)</div>
+                    <table class="compare-table">
+                        <thead><tr><th>Feature</th><th>Context API</th><th>Redux Toolkit</th></tr></thead>
+                        <tbody>
+                            <tr><td>Complexity</td><td>Simple / Low</td><td>Complex / High</td></tr>
+                            <tr><td>Performance</td><td>Can trigger many re-renders</td><td>Highly optimized</td></tr>
+                            <tr><td>Use Case</td><td>Themes, Auth Status</td><td>Large Data, Dashboards</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>// Context Example
+const UserContext = React.createContext();
+
+function App() {
+  return (
+    &lt;UserContext.Provider value={{ name: 'John' }}&gt;
+      &lt;Profile /&gt;
+    &lt;/UserContext.Provider&gt;
+  );
+}
+
+// Redux Example (The Modern Way)
+const counterSlice = createSlice({
+  name: 'counter',
+  initialState: { value: 0 },
+  reducers: { increment: (state) => { state.value += 1; } }
+});</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Start with <strong>Context API</strong>. Only move to <strong>Redux</strong> when your application state becomes too large to manage easily.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">3.8</span>
+                <div class="q-title">Explain React application deployment using Netlify and Render.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box"><strong>Deployment</strong> means putting your local code onto a public server. <strong>Netlify</strong> is the go-to for Frontend sites, while <strong>Render</strong> is perfect for Full-Stack apps with a Backend.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (The Workflow)</div>
+                    <ul class="points">
+                        <li><strong>Build:</strong> React is "compiled" into static HTML/JS files using <code>npm run build</code>.</li>
+                        <li><strong>Connect:</strong> Link your GitHub to Netlify/Render.</li>
+                        <li><strong>CI/CD:</strong> Every time you push code to GitHub, the site updates automatically.</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">bash</span></div>
+                        <pre># The manual build command run by deployment servers
+$ npm run build
+
+# Typical build folder output:
+# /dist (or /build)
+#  - index.html
+#  - bundle.js
+#  - styles.css</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Modern deployment is automated. Connect your <strong>GitHub</strong>, and let the cloud handle the rest.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">3.9</span>
+                <div class="q-title">Explain React Hooks: useEffect, useRef, and custom hooks.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box"><strong>Hooks</strong> are functions that let you "hook into" React features. <strong>useEffect</strong> handles side-effects (like fetching data), while <strong>useRef</strong> allows you to talk to a physical HTML element directly (like focusing a search box).</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (The Use Cases)</div>
+                    <div class="mini-card">
+                        <h5>🛠️ Specialized Hooks</h5>
+                        <ul class="points">
+                            <li><strong>useEffect:</strong> Used for "External Actions" (APIs, Timers, LocalStorage).</li>
+                            <li><strong>useRef:</strong> Used to "Remember" something without causing a re-render, or to access the DOM.</li>
+                            <li><strong>Custom Hooks:</strong> Creating your own reusable functions (e.g., <code>useAuth</code>) to share logic between components.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <h4>The Hook Lifecycle</h4>
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">Render UI</span><span class="arrow-r">→</span><span class="fbox purple">Run useEffect</span><span class="arrow-r">→</span><span class="fbox green">Update UI</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>import { useEffect, useRef } from 'react';
+
+function Timer() {
+  const inputRef = useRef();
+
+  useEffect(() => {
+    // This runs AFTER the component shows up on screen
+    console.log("Timer started!");
+    inputRef.current.focus(); // Focus the box automatically
+  }, []); // Empty [] means "run only once"
+
+  return &lt;input ref={inputRef} /&gt;;
+}</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Hooks are the heart of <strong>Functional Components</strong>. They allow you to write complex logic while keeping your code clean and readable.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">4.1</span>
+                <div class="q-title">Explain MongoDB aggregation framework with examples ($match, $group, $sort).</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">The <strong>Aggregation Framework</strong> is an "Assembly Line" for data processing. It allows you to transform raw documents into computed results (like calculating totals, averages, or filtering complex patterns) by passing them through a multi-stage pipeline.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (The Pipeline Stages)</div>
+                    <div class="mini-card">
+                        <ul class="points">
+                            <li><strong>$match:</strong> Filters the documents (like a SQL WHERE clause).</li>
+                            <li><strong>$group:</strong> Groups documents by a specific field and calculates values (like SUM or AVG).</li>
+                            <li><strong>$sort:</strong> Reorders the resulting documents (1 for Ascending, -1 for Descending).</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <h4>Aggregation Pipeline Flow</h4>
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox dark">Collection [1000 Docs]</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox purple">$match { status: "Active" }</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox orange">$group { _id: "$category", total: { $sum: "$price" } }</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox green">Final Result [Summary]</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>db.orders.aggregate([
+  { $match: { category: "Electronics" } },
+  { $group: { _id: "$brand", totalSales: { $sum: "$amount" } } },
+  { $sort: { totalSales: -1 } }
+]);</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Aggregation is the most powerful tool in MongoDB for **data analytics**. It shifts the burden of calculation from your Node.js code to the high-performance database engine.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">4.2</span>
+                <div class="q-title">Design REST API endpoints for CRUD operations with filtering.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box"><strong>REST API Design</strong> is about creating predictable URLs for managing resources. CRUD stands for Create, Read, Update, and Delete—mapped to POST, GET, PUT, and DELETE methods.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (The Mapping)</div>
+                    <table class="compare-table">
+                        <thead><tr><th>Goal</th><th>HTTP Method</th><th>Endpoint</th></tr></thead>
+                        <tbody>
+                            <tr><td>Create User</td><td>POST</td><td>/api/users</td></tr>
+                            <tr><td>List Users</td><td>GET</td><td>/api/users?role=admin</td></tr>
+                            <tr><td>Update User</td><td>PUT</td><td>/api/users/:id</td></tr>
+                            <tr><td>Delete User</td><td>DELETE</td><td>/api/users/:id</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <h4>RESTful Request Lifecycle</h4>
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">Client (React)</span><span class="arrow-r">→</span><span class="fbox dark">GET /products?cat=shoes</span><span class="arrow-r">→</span><span class="fbox orange">Express Router</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>app.get('/api/products', async (req, res) => {
+  const { category } = req.query; // Filtering!
+  const products = await Product.find(category ? { category } : {});
+  res.json(products);
+});</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Standardized endpoints make your API **Intuitive**. Developers should be able to "guess" your URLs without reading the docs.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">4.3</span>
+                <div class="q-title">Explain JWT authentication workflow and role-based access control (RBAC) with
+                    protected routes.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box"><strong>Role-Based Access Control (RBAC)</strong> restricts network access
+                        based on the roles of individual users within an enterprise (e.g., Admin vs User). When using
+                        <strong>JWT</strong>, the user's role is encrypted inside the token's payload. Express
+                        middleware reads this token, decodes the role, and determines if the user is authorized to
+                        access the requested route.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (The Workflow)</div>
+                    <div class="mini-card">
+                        <ul class="points">
+                            <li><strong>Login:</strong> User sends credentials. Server returns a JWT containing the user's <code>id</code> and <code>role</code>.</li>
+                            <li><strong>Middleware:</strong> Every request passes through a <code>verifyToken</code> middleware.</li>
+                            <li><strong>Authorization:</strong> A secondary middleware checks if the <code>user.role</code> matches the required role for that route.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <h4>JWT and Role Verification</h4>
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">Client Request</span><span
+                                    class="arrow-r">→</span><span class="fbox teal">Header: Bearer <Token></span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox purple">verifyToken() Middleware</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox orange">Valid Token?</span><span
+                                    class="arrow-r">→</span><span class="fbox red">No → 401 Unauthorized</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox green">Yes</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox purple">checkRole('Admin') Middleware</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox orange">Is user.role == Admin?</span><span
+                                    class="arrow-r">→</span><span class="fbox red">No → 403 Forbidden</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox green">Yes → Access Route</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span
+                                class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>// 1. JWT Authentication Middleware
+const verifyToken = (req, res, next) =&gt; {
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) return res.status(401).json({ error: "Access Denied" });
+
+    try {
+        req.user = jwt.verify(token, process.env.JWT_SECRET);
+        // req.user now contains { id: "123", role: "admin" }
+        next();
+    } catch (err) {
+        res.status(401).json({ error: "Invalid Token" });
+    }
+};
+
+// 2. Role-Based Access Control (RBAC) Middleware Factory
+const requireRole = (requiredRole) =&gt; {
+    return (req, res, next) =&gt; {
+        if (req.user.role !== requiredRole) {
+            return res.status(403).json({ error: "Forbidden: Admins only" });
+        }
+        next(); // User has the correct role, allow access
+    };
+};
+
+// 3. Applying to Protected Routes
+app.get('/api/profile', verifyToken, ProfileController.get); 
+app.delete('/api/users/:id', verifyToken, requireRole('admin'), UserController.delete);</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Combining <strong>JWT</strong> with <strong>RBAC Middleware</strong> creates
+                        a highly secure and granular application. <strong>Authentication (verifyToken)</strong> confirms
+                        WHO the user is, while <strong>Authorization (requireRole)</strong> confirms WHAT they are
+                        allowed to do.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">4.4</span>
+                <div class="q-title">Explain full-stack data flow (Client → Server → Database → UI update) using
+                    real-world example.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box"><strong>Full-Stack Data Flow</strong> is simply the journey of data from the
+                        moment a user clicks a button to the moment it is saved in the database, and back again. Imagine
+                        a restaurant: The User (Customer) gives an order to the Frontend (Waiter), who carries the order
+                        via HTTP to the Backend (Chef). The Chef gets ingredients from the Database (Pantry), cooks the
+                        meal, and the Waiter brings it back to the Customer.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <h4>Blog Post Creation Cycle</h4>
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">1. User clicks 'Submit'</span><span
+                                    class="arrow-r">→</span><span class="fbox blue">React handles onSubmit event</span>
+                            </div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox teal">2. Axios POST /api/posts</span><span
+                                    class="arrow-r">→</span><span class="fbox teal">Sends JSON: {title, body}</span>
+                            </div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox purple">3. Express Router</span><span
+                                    class="arrow-r">→</span><span class="fbox purple">Validates Data & Auth</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox orange">4. Mongoose ODM</span><span
+                                    class="arrow-r">→</span><span class="fbox orange">Post.create()</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox dark">5. MongoDB</span><span
+                                    class="arrow-r">→</span><span class="fbox dark">Saves BSON Document</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox purple">6. Express sends 201 JSON</span><span
+                                    class="arrow-r">→</span><span class="fbox teal">axios.post() resolves</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox green">7. React updates State</span><span
+                                    class="arrow-r">→</span><span class="fbox green">New Post appears in UI</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation</div>
+                    <ul class="points">
+                        <li><strong>1. The Client (React):</strong> The user fills out a form and clicks "Submit". React
+                            packages this data into a neat JSON box.</li>
+                        <li><strong>2. The Delivery (HTTP):</strong> A tool like Axios takes this JSON box and drives it
+                            over the internet to the server.</li>
+                        <li><strong>3. The Server (Node.js/Express):</strong> The server opens the box, checks if the
+                            data is safe, and prepares it for storage.</li>
+                        <li><strong>4. The Database (MongoDB):</strong> The server hands the data to MongoDB, which
+                            saves it permanently on a hard drive.</li>
+                        <li><strong>5. The Return Trip:</strong> The server sends a "Success!" message back to the
+                            frontend.</li>
+                        <li><strong>6. UI Update:</strong> React receives the success message and instantly updates the
+                            screen so the user sees their new post.</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>// Step-by-step logic
+// 1. Client (React)
+const handleSubmit = (data) => axios.post('/api/posts', data);
+
+// 2. Server (Express)
+app.post('/api/posts', (req, res) => {
+  const newPost = new Post(req.body);
+  newPost.save(); // 3. Database (MongoDB)
+  res.status(201).json(newPost); // 4. Return
+});</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Every interaction in a modern application follows this exact
+                        <strong>circular data flow</strong>. Mastery of Full-Stack development is the ability to debug
+                        and optimize at each of these distinct transition points.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">4.5</span>
+                <div class="q-title">Explain server-side pagination and MongoDB query filtering. Compare with
+                    client-side pagination.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box"><strong>Pagination</strong> means breaking a massive list of data into smaller
+                        "pages" (like a Google search). If Amazon has 10 million products, downloading them all at once
+                        would crash your computer. <strong>Server-side pagination</strong> solves this by making the
+                        backend database do the work: it slices out just the 20 products you need for "Page 1" and sends
+                        <em>only</em> those 20 products to your browser.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (The Logic)</div>
+                    <div class="mini-card">
+                        <p>We use two key MongoDB methods for pagination:</p>
+                        <ul class="points">
+                            <li><strong>.skip():</strong> Bypasses the number of records we already saw on previous pages.</li>
+                            <li><strong>.limit():</strong> restricts the result to exactly one page's worth of data.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <h4>Pagination Mechanism</h4>
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">Page 1: .limit(10) .skip(0)</span></div>
+                            <div class="flow-row"><span class="fbox teal">Page 2: .limit(10) .skip(10)</span></div>
+                            <div class="flow-row"><span class="fbox green">Page 3: .limit(10) .skip(20)</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Extra (Comparison)</div>
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Server-Side Pagination</th>
+                                <th>Client-Side Pagination</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Where data is split</td>
+                                <td>Database / Backend</td>
+                                <td>Browser / Frontend</td>
+                            </tr>
+                            <tr>
+                                <td>Initial Load Time</td>
+                                <td>Fast (fetches only 10 rows)</td>
+                                <td>Slow (fetches 10,000 rows)</td>
+                            </tr>
+                            <tr>
+                                <td>Memory Usage</td>
+                                <td>Low browser memory</td>
+                                <td>High browser memory</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span
+                                class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>app.get('/api/posts', async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = 10;
+    const skip = (page - 1) * limit;
+
+    const posts = await Post.find().skip(skip).limit(limit);
+    res.json(posts);
+});</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">While <strong>Client-side pagination</strong> is simpler to code, it
+                        collapses under large datasets. <strong>Server-side pagination</strong> utilizing MongoDB's
+                        <code>.skip()</code> and <code>.limit()</code> methods is the mandatory industry standard for
+                        scalable applications.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">4.6</span>
+                <div class="q-title">Demonstrate file upload using Multer and explain challenges in handling large media
+                    files.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">HTML forms submit standard text as
+                        <code>application/x-www-form-urlencoded</code>. However, files (images, PDFs) must be submitted
+                        as <code>multipart/form-data</code>. Express cannot parse this natively. <strong>Multer</strong>
+                        is a Node.js middleware exclusively used for handling multipart form data, specifically for file
+                        uploads.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <h4>Multer File Upload Flow</h4>
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">React <input type='file'></span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox teal">FormData() Append</span><span
+                                    class="arrow-r">→</span><span class="fbox teal">POST multipart/form-data</span>
+                            </div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox purple">Express Router</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox orange">Multer Middleware</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox green">Saves file to /uploads folder</span><span
+                                    class="arrow-r">→</span><span class="fbox green">Attaches data to req.file</span>
+                            </div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox dark">Controller saves DB path</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span
+                                class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>const express = require(&#x27;express&#x27;);
+const multer  = require(&#x27;multer&#x27;);
+const path = require(&#x27;path&#x27;);
+const app = express();
+
+// 1. Configure Multer Storage Engine
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, &#x27;./uploads/&#x27;) // Save location
+    },
+    filename: function (req, file, cb) {
+        // Create unique filename: timestamp-originalName
+        cb(null, Date.now() + &#x27;-&#x27; + file.originalname)
+    }
+});
+
+// 2. Initialize Multer with file size limit (5MB)
+const upload = multer({ 
+    storage: storage,
+    limits: { fileSize: 5 * 1024 * 1024 } 
+});
+
+// 3. Route using middleware (.single expects &#x27;avatar&#x27; form field)
+app.post(&#x27;/api/upload&#x27;, upload.single(&#x27;avatar&#x27;), (req, res) =&gt; {
+    if (!req.file) return res.status(400).send(&#x27;No file uploaded.&#x27;);
+    
+    // req.file contains file info (filename, size, path)
+    res.json({ 
+        message: &quot;File uploaded successfully&quot;, 
+        filePath: `/uploads/${req.file.filename}` 
+    });
+});</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (Challenges in Large Media Uploads)</div>
+                    <ul class="points">
+                        <li><strong>Memory Leaks:</strong> Buffering large videos in RAM crashes Node servers. Solutions
+                            include saving directly to disk via Streams.</li>
+                        <li><strong>Timeouts:</strong> Large uploads take time. Nginx or client browsers may drop the
+                            connection before completion.</li>
+                        <li><strong>Storage Costs:</strong> Storing media on the application server (e.g., Heroku) is
+                            expensive and often wiped on restart. <em>Solution:</em> Upload directly to AWS S3 buckets.
+                        </li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion"><strong>Multer</strong> intercepts multipart streams and safely writes them
+                        to disk, providing the file metadata to Express. For enterprise applications, handling large
+                        media requires bypassing the backend entirely and uploading directly to cloud storage (like AWS
+                        S3).</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">4.7</span>
+                <div class="q-title">Differentiate authentication vs authorization and analyze security risks with
+                    mitigation.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box"><strong>Authentication (AuthN)</strong> is verifying <em>who</em> someone is
+                        (Identity). <strong>Authorization (AuthZ)</strong> is verifying <em>what</em> they are allowed
+                        to do (Permissions). A complete security system requires both. For example, logging in is
+                        Authentication; being denied access to an Admin dashboard is Authorization.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Extra (Comparison)</div>
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th>Comparison</th>
+                                <th>Authentication</th>
+                                <th>Authorization</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Definition</td>
+                                <td>Verifies Identity</td>
+                                <td>Verifies Permissions/Roles</td>
+                            </tr>
+                            <tr>
+                                <td>Analogy</td>
+                                <td>Checking ID at a concert door</td>
+                                <td>Checking if ticket is VIP or General</td>
+                            </tr>
+                            <tr>
+                                <td>Mechanisms</td>
+                                <td>Passwords, Biometrics, 2FA</td>
+                                <td>RBAC, ABAC, JWT Payloads</td>
+                            </tr>
+                            <tr>
+                                <td>HTTP Status</td>
+                                <td>401 Unauthorized (Unauthenticated)</td>
+                                <td>403 Forbidden (Lacks privileges)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (Security Risks & Mitigations)</div>
+                    <ul class="points">
+                        <li><strong>Risk 1: SQL/NoSQL Injection</strong> — Attackers manipulate DB queries via inputs.
+                            <br><em>Mitigation:</em> Use Mongoose (ODM) which sanitizes inputs, and avoid raw string
+                            queries.</li>
+                        <li><strong>Risk 2: XSS (Cross-Site Scripting)</strong> — Attackers inject malicious JavaScript
+                            into the UI. <br><em>Mitigation:</em> React automatically escapes variables in JSX. Never
+                            use <code>dangerouslySetInnerHTML</code>.</li>
+                        <li><strong>Risk 3: Password Breaches</strong> — Storing plain-text passwords.
+                            <br><em>Mitigation:</em> ALWAYS hash passwords using <code>bcrypt</code> with a salt round
+                            before saving to the DB.</li>
+                        <li><strong>Risk 4: Token Theft</strong> — Attackers steal JWTs from LocalStorage.
+                            <br><em>Mitigation:</em> Store JWTs in <code>HttpOnly</code> cookies which cannot be
+                            accessed by client-side JS.</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">AuthN: ID Card</span><span class="arrow-r">→</span><span class="fbox dark">Valid?</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox orange">AuthZ: Access Key</span><span class="arrow-r">→</span><span class="fbox green">Enter Room</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>// Security Mitigation Example: Hashing Passwords
+const bcrypt = require('bcrypt');
+const hashPassword = async (pwd) => {
+  const salt = await bcrypt.genSalt(10);
+  return await bcrypt.hash(pwd, salt);
+};</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">A secure application must establish identity
+                        (<strong>Authentication</strong>) before enforcing rules (<strong>Authorization</strong>).
+                        Recognizing common attack vectors like <strong>XSS</strong> and applying mitigations like
+                        <strong>bcrypt hashing</strong> is essential for protecting user data.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">4.8</span>
+                <div class="q-title">Explain asynchronous data flow in applications (likes/comments scenario) and
+                    performance benefits.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">When you click "Like" on Instagram, the heart turns red instantly. It doesn't
+                        freeze the app while it talks to the server. This is called an <strong>Optimistic UI
+                            Update</strong>. The frontend "optimistically" assumes the server will say yes, so it
+                        updates the screen immediately. Meanwhile, it sends the actual request to the backend in the
+                        background (asynchronously). This makes the app feel incredibly fast.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <h4>Optimistic Update (Like Button)</h4>
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">User clicks 'Like'</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox green">1. Update UI Instantly (count + 1)</span>
+                            </div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox orange">2. Send background Axios Request</span>
+                            </div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox purple">Wait for Backend...</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox teal">Success? Do nothing</span><span
+                                    class="fbox red">Fail? Revert UI (count - 1)</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span
+                                class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>import React, { useState } from &#x27;react&#x27;;
+import axios from &#x27;axios&#x27;;
+
+function LikeButton({ postId, initialLikes }) {
+    const [likes, setLikes] = useState(initialLikes);
+    const [liked, setLiked] = useState(false);
+
+    const handleLike = async () =&gt; {
+        // 1. OPTIMISTIC UPDATE: Update UI immediately
+        setLikes(likes + 1);
+        setLiked(true);
+
+        try {
+            // 2. Asynchronous Background Request
+            await axios.post(`/api/posts/${postId}/like`);
+            // Success: Do nothing, UI is already correct
+        } catch (error) {
+            // 3. REVERT on Failure (Rollback)
+            setLikes(likes); // Revert to old count
+            setLiked(false);
+            alert(&quot;Failed to like post. Please check your connection.&quot;);
+        }
+    };
+
+    return (
+        &lt;button onClick={handleLike} disabled={liked}&gt;
+            👍 {likes} Likes
+        &lt;/button&gt;
+    );
+}</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion"><strong>Asynchronous data flow</strong> utilizing Optimistic UI updates
+                        masks network latency completely. By updating the state immediately and executing HTTP requests
+                        in the background, applications feel incredibly fast and responsive, rolling back only if an
+                        error occurs.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">5.1</span>
+                <div class="q-title">Explain full-stack project architecture and folder structure (React/Angular +
+                    Node.js + MongoDB).</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">A proper <strong>Full-Stack Architecture</strong> keeps the Frontend (the UI)
+                        and the Backend (the API) completely separated into two different folders. Think of it like a
+                        restaurant: the Dining Room (Frontend) and the Kitchen (Backend) are separate rooms. This allows
+                        frontend designers and backend engineers to work on their code at the same time without breaking
+                        each other's work.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (Standard Monorepo Folder Structure)</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span
+                                class="code-dot g"></span><span class="code-lang">yaml</span></div>
+                        <pre>my-fullstack-app/
+│
+├── frontend/                 # React Application
+│   ├── public/               # Static assets (index.html, favicon)
+│   ├── src/
+│   │   ├── components/       # Reusable UI (Button.js, Modal.js)
+│   │   ├── pages/            # Routable Views (Home.js, Login.js)
+│   │   ├── services/         # API fetch functions (api.js)
+│   │   ├── context/          # React Context (AuthContext.js)
+│   │   └── App.js            # Main Router Setup
+│   └── package.json
+│
+└── backend/                  # Node.js + Express Application
+    ├── config/               # DB Connection (db.js)
+    ├── controllers/          # Business Logic (userController.js)
+    ├── models/               # Mongoose Schemas (User.js)
+    ├── routes/               # API Endpoints (userRoutes.js)
+    ├── middlewares/          # Auth/Error checks (auth.js)
+    ├── server.js             # Entry Point
+    └── package.json</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (Why MVC in Backend?)</div>
+                    <ul class="points">
+                        <li><strong>Models:</strong> Define the data structure (Mongoose).</li>
+                        <li><strong>Views:</strong> Handled entirely by the isolated Frontend (React).</li>
+                        <li><strong>Controllers:</strong> The brain. Executes logic like 'Hash password, create User,
+                            send JSON response'.</li>
+                        <li><strong>Routes:</strong> Act as the traffic cop, mapping a URL like <code>/api/login</code>
+                            to the specific Controller function.</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Following a strict <strong>Folder Structure</strong> based on the MVC
+                        pattern prevents 'spaghetti code'. By separating <strong>Routes</strong> from
+                        <strong>Controllers</strong>, and <strong>Models</strong> from <strong>Services</strong>, a team
+                        of developers can work simultaneously without conflicting with each other's files.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">5.2</span>
+                <div class="q-title">Explain routing strategies: nested routes, layout routes, public vs private routes.
+                </div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">In modern web apps, <strong>Routing Strategies</strong> are techniques used to
+                        manage how users move between different parts of the application. Unlike simple websites, apps
+                        use specialized routes to handle security (Private vs Public), UI consistency (Layouts), and
+                        complex hierarchies (Nested) to keep the code organized and the user experience smooth.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <h4>Routing Strategy Hierarchy</h4>
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox dark">Main App Router</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox blue">Public Route (/login)</span><span
+                                    class="fbox purple">Private Route (/dashboard)</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span class="fbox teal">No Auth Needed</span><span
+                                    class="fbox orange">Auth Guard Check</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span></span><span class="fbox purple">Layout Route (Navbar +
+                                    Sidebar)</span></div>
+                            <div class="arrow-d">↓</div>
+                            <div class="flow-row"><span></span><span class="fbox green">Nested: /profile</span><span
+                                    class="fbox green">Nested: /settings</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation</div>
+                    <ul class="points">
+                        <li><strong>Public Routes:</strong> Accessible to everyone. Used for landing pages, login
+                            screens, and registration forms.</li>
+                        <li><strong>Private (Protected) Routes:</strong> Only accessible to logged-in users. An
+                            "Authentication Guard" checks for a valid token before allowing access.</li>
+                        <li><strong>Layout Routes:</strong> A special parent route that holds common UI elements (like a
+                            Header, Footer, or Sidebar). It prevents repeating the same code on every page.</li>
+                        <li><strong>Nested Routes:</strong> Routes that exist inside other routes. For example,
+                            <code>/dashboard/settings</code> renders the "Settings" component inside the "Dashboard"
+                            area.</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <div class="section-label">Example / Use Case</div>
+                    <div class="mini-card">
+                        <h5>🏦 The "Banking App" Scenario</h5>
+                        <ul class="points">
+                            <li><strong>Public:</strong> The "Welcome" and "Login" pages are open to everyone.</li>
+                            <li><strong>Private:</strong> The "Account Balance" and "Transfers" pages are protected. If
+                                a user isn't logged in, they are kicked back to the Login page.</li>
+                            <li><strong>Layout &amp; Nested:</strong> The user sees a permanent <strong>Sidebar</strong>
+                                (Layout) while they switch between their "Transaction History" and "Profile Settings"
+                                (Nested pages).</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code (Implementation)</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span
+                                class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>// React Router v6 - Example of Protected Layout Route
+const App = () => (
+  &lt;Routes&gt;
+    &lt;Route path="/login" element={&lt;Login /&gt;} /&gt;
+    
+    {/* Private Layout Route wrapping Nested Routes */}
+    &lt;Route element={&lt;PrivateRouteGuard /&gt;}&gt;
+      &lt;Route element={&lt;MainLayout /&gt;}&gt;
+        &lt;Route path="/dashboard" element={&lt;Dashboard /&gt;} /&gt;
+        &lt;Route path="/profile" element={&lt;Profile /&gt;} /&gt;
+      &lt;/Route&gt;
+    &lt;/Route&gt;
+  &lt;/Routes&gt;
+);</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Advanced <strong>Routing Strategies</strong> are the secret to building
+                        secure, professional apps. By using <strong>Layouts</strong> for consistency and <strong>Private
+                            Guards</strong> for security, developers can manage complex page structures with minimal
+                        code.</div>
+                </div>
+            </div>
+        </div>
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">5.3</span>
+                <div class="q-title">Explain advanced form validation with error handling and user feedback.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box"><strong>Form Validation</strong> ensures user data is safe and correctly formatted. "Advanced" validation provides real-time feedback (as they type) and checks complex rules like password strength or unique usernames.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (The Hybrid Approach)</div>
+                    <div class="mini-card">
+                        <ul class="points">
+                            <li><strong>Client-Side:</strong> Fast UX. Prevents unnecessary server calls.</li>
+                            <li><strong>Server-Side:</strong> Mandatory Security. Prevents hackers from sending bad data via API tools.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">1. User Inputs</span><span class="arrow-r">→</span><span class="fbox purple">2. Regex Check</span><span class="arrow-r">→</span><span class="fbox green">3. Success UI</span></div>
+                            <div class="flow-row"><span></span><span></span><span class="arrow-r">→</span><span class="fbox red">3. Error: "Min 8 chars"</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>// Simple check function
+const checkPassword = (p) => {
+  if (p.length < 8) return "Too Short!";
+  if (!/[0-9]/.test(p)) return "Need a number!";
+  return "OK";
+};</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Validation is about **Trust**. You help users with frontend hints, and you protect your database with backend checks.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">5.4</span>
+                <div class="q-title">Explain state persistence using LocalStorage and sessionStorage (login workflow).</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">React "forgets" everything on refresh. <strong>Persistence</strong> means saving data to the browser's storage so it survives a reload. <strong>LocalStorage</strong> stays forever; <strong>SessionStorage</strong> disappears when the tab is closed.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (The Storage Options)</div>
+                    <table class="compare-table">
+                        <thead><tr><th>Feature</th><th>LocalStorage</th><th>SessionStorage</th></tr></thead>
+                        <tbody>
+                            <tr><td>Longevity</td><td>Indefinite</td><td>Tab session only</td></tr>
+                            <tr><td>Capacity</td><td>~5MB - 10MB</td><td>~5MB</td></tr>
+                            <tr><td>Best for</td><td>Auth Tokens, Themes</td><td>Temporary Form Data</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">Login Success</span><span class="arrow-r">→</span><span class="fbox dark">Save Token to LocalStorage</span><span class="arrow-r">→</span><span class="fbox green">Refresh Page (Still logged in)</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>// Saving data
+localStorage.setItem('token', 'abc-123');
+
+// Reading data
+const token = localStorage.getItem('token');</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">**LocalStorage** is the go-to for persistent sessions. It ensures users don't have to log in every single time they refresh your app.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">5.5</span>
+                <div class="q-title">Explain the process of serving static files (images, CSS) from an Express server.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">By default, Express is for APIs (JSON). To serve "real files" like images or stylesheets, you use the <code>express.static</code> middleware to expose a specific directory to the public.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (Security First)</div>
+                    <div class="mini-card">
+                        <p>You should never expose your root directory! We create a <code>/public</code> folder and tell Express: "Only allow files inside here to be downloaded by users."</p>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">Browser: GET /img/logo.png</span><span class="arrow-r">→</span><span class="fbox purple">Express.static('public')</span><span class="arrow-r">→</span><span class="fbox green">Send File</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>const path = require('path');
+app.use('/static', express.static(path.join(__dirname, 'public')));</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">**Static Middleware** handles file requests automatically, saving you from writing custom routes for every single image in your app.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">5.6</span>
+                <div class="q-title">Explain how to implement search and filtering on the frontend (React).</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">Frontend searching allows users to find items instantly without waiting for the server. We use the <code>.filter()</code> array method to create a subset of data that matches a search query in real-time.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (The Logic)</div>
+                    <ul class="points">
+                        <li><strong>Filter:</strong> Check if item title contains the query string.</li>
+                        <li><strong>Normalize:</strong> Use <code>toLowerCase()</code> so "Apple" matches "apple".</li>
+                        <li><strong>Performance:</strong> Instant for small lists (under 500 items).</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox blue">List [Car, Bus, Bike]</span><span class="arrow-r">→</span><span class="fbox purple">Search "B"</span><span class="arrow-r">→</span><span class="fbox green">Filtered [Bus, Bike]</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>const filtered = products.filter(p => 
+  p.name.toLowerCase().includes(query.toLowerCase())
+);</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">**Frontend filtering** provides a "snappy" feel. Users love seeing results appear instantly as they type.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">5.7</span>
+                <div class="q-title">Explain how to handle errors and show loading states in React.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">When fetching data, an app can be in 3 states: <strong>Loading</strong> (waiting), <strong>Error</strong> (failed), or <strong>Success</strong> (ready). We use conditional rendering to show the correct UI for each state.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (The States)</div>
+                    <div class="mini-card">
+                        <ul class="points">
+                            <li><strong>Loading:</strong> Show a Spinner or Skeleton screen.</li>
+                            <li><strong>Error:</strong> Show a "Retry" button or helpful message.</li>
+                            <li><strong>Success:</strong> Render the actual data list.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Diagram</div>
+                    <div class="diagram-box">
+                        <div class="flow">
+                            <div class="flow-row"><span class="fbox orange">Loading...</span><span class="arrow-r">→</span><span class="fbox green">Done!</span></div>
+                            <div class="flow-row"><span></span><span class="arrow-r">→</span><span class="fbox red">Failed!</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Code</div>
+                    <div class="code-wrap">
+                        <div class="code-header"><span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span><span class="code-lang">javascript</span></div>
+                        <pre>if (loading) return &lt;Spinner /&gt;;
+if (error) return &lt;p&gt;Something went wrong!&lt;/p&gt;;
+return &lt;DataList data={data} /&gt;;</pre>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion">Handling these states is the difference between a **Broken App** and a **Professional Product**. Always design for the "Slow Network" and "Offline" scenarios.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="q-card">
+            <div class="q-card-header" role="button"><span class="q-num">5.8</span>
+                <div class="q-title">Explain deployment steps, checklist, and challenges for production-ready full-stack
+                    applications.</div>
+            </div>
+            <div class="q-body">
+                <div class="section">
+                    <div class="section-label">Definition / Intro</div>
+                    <div class="def-box">Taking an app from <code>localhost</code> to the public internet involves
+                        <strong>Deployment</strong>. A Full-Stack app requires deploying the Frontend (static hosting),
+                        the Backend (Node server), and the Database (managed cloud). Ensuring it is 'Production-Ready'
+                        means passing strict security, performance, and environment variable checks.</div>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (Production Deployment Checklist)</div>
+                    <ul class="points">
+                        <li><strong>1. Environment Variables:</strong> Replace all local secrets
+                            (<code>localhost</code>, raw DB passwords) with <code>process.env</code> variables injected
+                            by the hosting provider.</li>
+                        <li><strong>2. Database Cloud Migration:</strong> Migrate local MongoDB to MongoDB Atlas. Ensure
+                            network access IP lists allow connections from your deployment server (e.g. Render/Heroku
+                            IP).</li>
+                        <li><strong>3. Remove Console Logs:</strong> Strip all <code>console.log()</code> statements to
+                            prevent leaking data in the browser terminal.</li>
+                        <li><strong>4. Enable CORS Correctly:</strong> Configure the backend CORS middleware to ONLY
+                            accept requests from your exact frontend production URL (not <code>*</code>).</li>
+                        <li><strong>5. Build Optimization:</strong> Run <code>npm run build</code> on React to minify
+                            JS/CSS, reducing the payload size drastically.</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <div class="section-label">Explanation (Common Deployment Challenges)</div>
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th>Challenge</th>
+                                <th>Symptom</th>
+                                <th>Solution</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CORS Blocked</td>
+                                <td>Frontend cannot fetch API, shows CORS error in console</td>
+                                <td>Ensure backend <code>cors({ origin: 'https://myfrontend.com' })</code> is set</td>
+                            </tr>
+                            <tr>
+                                <td>Page Refresh 404</td>
+                                <td>React Router links work, but hitting F5 gives a 404</td>
+                                <td>Configure Netlify/Host to redirect all routes to <code>index.html</code> (using a
+                                    <code>_redirects</code> file)</td>
+                            </tr>
+                            <tr>
+                                <td>Environment Undefined</td>
+                                <td>Backend crashes complaining about missing DB URI</td>
+                                <td>You forgot to paste your `.env` variables into the Hosting Dashboard Settings</td>
+                            </tr>
+                            <tr>
+                                <td>Mixed Content Error</td>
+                                <td>HTTPS Frontend blocks HTTP Backend requests</td>
+                                <td>Ensure the Backend is deployed with an HTTPS certificate (Render provides this
+                                    natively)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="section">
+                    <div class="section-label">Conclusion</div>
+                    <div class="conclusion"><strong>Deployment</strong> is the final exam of full-stack development. By
+                        systematically verifying <strong>Environment Variables</strong>, locking down
+                        <strong>CORS</strong>, and understanding how static <strong>React Routing</strong> differs on a
+                        live server, developers can smoothly launch production-ready applications.
+    </main>
+    </div>
+
+    <script>
+        document.querySelectorAll('.q-card-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const card = header.parentElement;
+                const body = card.querySelector('.q-body');
+
+                // Toggle 'open' class (matching the CSS)
+                const isOpen = card.classList.toggle('open');
+
+                if (isOpen) {
+                    body.style.display = "block"; // Required because CSS has display: none
+                    body.style.maxHeight = body.scrollHeight + "px";
+                } else {
+                    body.style.maxHeight = "0px";
+                    // Wait for transition before hiding
+                    setTimeout(() => {
+                        if (!card.classList.contains('open')) {
+                            body.style.display = "none";
+                        }
+                    }, 300);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
